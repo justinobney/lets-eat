@@ -1,5 +1,5 @@
 import React, {Component} from 'react/addons';
-import {Navbar, Nav} from 'react-bootstrap'; // NavItem
+import {Navbar, Nav, NavItem} from 'react-bootstrap';
 
 class TopNav extends Component {
     displayName = 'TopNav'
@@ -8,7 +8,7 @@ class TopNav extends Component {
         return (
             <Navbar brand={<a href="#/">Let's Eat!</a>}>
                 <Nav>
-                    {/* <NavItem href="#/offices">Offices</NavItem> */}
+                    <NavItem href="#/login">Log In</NavItem>
                 </Nav>
             </Navbar>
         );
