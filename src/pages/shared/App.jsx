@@ -11,7 +11,7 @@ class App extends Component {
     let loading = this.props.uiState.loading;
     return (
       <div>
-        <TopNav />
+        <TopNav user={this.props.uiState.authData}/>
         <Grid>
           {this.props.children}
         </Grid>

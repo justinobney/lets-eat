@@ -8,7 +8,7 @@ import apiMiddleware from 'actions/apiMiddleware';
 
 let reducerTree = {
   uiState,
-  forms: formReducer
+  form: formReducer
 };
 
 let buildStore;

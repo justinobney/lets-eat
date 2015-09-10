@@ -7,7 +7,7 @@ import store from 'stores/index';
 
 function checkAuth(nextState, transition) {
   let {uiState} = store.getState();
-  if (!uiState.isAuthorized) {
+  if (!uiState.authData) {
     transition.to('/login', null, {nextPathname: nextState.location.pathname});
   }
 }

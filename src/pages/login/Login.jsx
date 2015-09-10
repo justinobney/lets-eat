@@ -1,8 +1,10 @@
 import React, {Component} from 'react/addons';
-import {Grid, Row, Col, Panel, Input, ButtonInput} from 'react-bootstrap';
+import {Grid, Row, Col, Panel} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+
 import {login} from 'actions/buttonActions';
+import LoginForm from './LoginForm';
 
 function mapStateToProps(reducers) {
     const {uiState} = reducers;
@@ -11,16 +13,16 @@ function mapStateToProps(reducers) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        buttonActions: bindActionCreators({login}, dispatch)
+        buttonActions: bindActionCreators({login}, dispatch),
+        dispatch
     };
 }
 
 class Login extends Component {
   displayName = 'Login component'
-  logIn(e) {
-    e.preventDefault();
+  handleSubmit(payload) {
     let { router } = this.context;
-    this.props.buttonActions.login(router);
+    this.props.buttonActions.login(payload, router);
   }
   render() {
     return (
@@ -29,13 +31,7 @@ class Login extends Component {
           <Col xs={4} xsOffset={4}>
             <br />
             <Panel header="Log In">
-              <form onSubmit={::this.logIn}>
-                <Input type="text" label="username" />
-                <Input type="password" label="Password" />
-                <ButtonInput type="submit" 
-                  onClick={::this.logIn}
-                  value="Log In" />
-              </form>
+              <LoginForm onSubmit={::this.handleSubmit} />
             </Panel>
           </Col>
         </Row>
