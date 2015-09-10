@@ -1,5 +1,5 @@
 import React, {Component} from 'react/addons';
-import {Row, Col, Button} from 'react-bootstrap';
+import {Grid, Row, Col, Panel, Input, ButtonInput} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {login} from 'actions/buttonActions';
@@ -17,19 +17,27 @@ function mapDispatchToProps(dispatch) {
 
 class Login extends Component {
   displayName = 'Login component'
-  logIn() {
+  logIn(e) {
+    e.preventDefault();
     let { router } = this.context;
     this.props.buttonActions.login(router);
   }
   render() {
     return (
-      <Row>
-          <Col xs={12}>
-            <Button bsSize="large" onClick={::this.logIn}>
-              Log In
-            </Button>
+      <Grid>
+        <Row>
+          <Col xs={4} xsOffset={4}>
+            <br />
+            <Panel header="Log In">
+              <form onSubmit={::this.logIn}>
+                <Input type="text" label="username" />
+                <Input type="password" label="Password" />
+                <ButtonInput type="submit" onClick={::this.logIn} value="Log In" />
+              </form>
+            </Panel>
           </Col>
         </Row>
+      </Grid>
     );
   }
 }

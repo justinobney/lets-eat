@@ -1,12 +1,14 @@
 import {applyMiddleware, compose, createStore, combineReducers} from 'redux';
 import {devTools} from 'redux-devtools';
 import thunk from 'redux-thunk';
+import {reducer as formReducer} from 'redux-form';
 
 import {uiState} from 'reducers/uiState';
 import apiMiddleware from 'actions/apiMiddleware';
 
 let reducerTree = {
-  uiState
+  uiState,
+  forms: formReducer
 };
 
 let buildStore;
