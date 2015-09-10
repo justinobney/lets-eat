@@ -32,7 +32,9 @@ class Login extends Component {
               <form onSubmit={::this.logIn}>
                 <Input type="text" label="username" />
                 <Input type="password" label="Password" />
-                <ButtonInput type="submit" onClick={::this.logIn} value="Log In" />
+                <ButtonInput type="submit" 
+                  onClick={::this.logIn}
+                  value="Log In" />
               </form>
             </Panel>
           </Col>
