@@ -1,8 +1,8 @@
-import {BUTTON_CLICK, LOAD_BEGIN, LOAD_COMPLETE} from 'constants';
+import {BUTTON_CLICK, LOGIN_SUCCESS, LOAD_BEGIN, LOAD_COMPLETE} from 'constants';
 
 const initialUiState = {
   clicks: 0,
-  isAuthorized: true,
+  isAuthorized: false,
   loading: {
     pending: 0,
     complete: 0
@@ -17,6 +17,8 @@ export function uiState(state = initialUiState, action) {
         case BUTTON_CLICK:
           let clicks = state.clicks + 1;
           return Object.assign({}, state, {clicks});
+        case LOGIN_SUCCESS:
+          return Object.assign({}, state, {isAuthorized: true});
         case LOAD_BEGIN:
           loading = Object.assign({}, state.loading, {pending: state.loading.pending + 1});
           return Object.assign({}, state, {loading});

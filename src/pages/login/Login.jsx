@@ -1,11 +1,25 @@
 import React, {Component} from 'react/addons';
 import {Row, Col, Button} from 'react-bootstrap';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {login} from 'actions/buttonActions';
 
-export default class Login extends Component {
+function mapStateToProps(reducers) {
+    const {uiState} = reducers;
+    return {uiState};
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        buttonActions: bindActionCreators({login}, dispatch)
+    };
+}
+
+class Login extends Component {
   displayName = 'Login component'
   logIn() {
     let { router } = this.context;
-    router.transitionTo('/', null, null);
+    this.props.buttonActions.login(router);
   }
   render() {
     return (
@@ -19,6 +33,8 @@ export default class Login extends Component {
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 Login.contextTypes = {
   router: React.PropTypes.object.isRequired
