@@ -1,4 +1,4 @@
-import {BUTTON_CLICK, LOGIN_SUCCESS} from '../constants';
+import {BUTTON_CLICK, LOGIN_SUCCESS, LOAD_BEGIN, LOAD_COMPLETE} from '../constants';
 import Firebase from 'firebase';
 
 let ref = new Firebase('https://envoc-chatterbox.firebaseio.com');
@@ -9,18 +9,33 @@ export function handleClick() {
 
 export function login(payload, router) {
   return dispatch => {
+    let complete = () => dispatch({type: LOAD_COMPLETE});
+    let fail = (error) => dispatch({type: 'REGISTER_FAIL', ...error});
+    dispatch({type: LOAD_BEGIN});
+
     auth(payload, (authData) => {
       dispatch({type: LOGIN_SUCCESS, payload: authData});
       router.transitionTo('/', null, null);
-    }, (error) => {
-      dispatch({type: 'LOGIN_FAIL', ...error});
-    });
+    }, fail, complete);
+  };
+}
+
+export function register(payload, router) {
+  return dispatch => {
+    let complete = () => dispatch({type: LOAD_COMPLETE});
+    let fail = (error) => dispatch({type: 'REGISTER_FAIL', ...error});
+    dispatch({type: LOAD_BEGIN});
+
+    createUser(payload, (authData) => {
+      dispatch({type: LOGIN_SUCCESS, payload: authData});
+      router.transitionTo('/', null, null);
+    }, fail, complete);
   };
 }
 
 function noop() {}
-function auth(authInfo, success, fail = noop) {
-  ref.authWithPassword(authInfo, authCallback);
+function auth(credentials, success, fail = noop, always = noop) {
+  ref.authWithPassword(credentials, authCallback);
 
   function authCallback(error, authData) {
     if (error) {
@@ -28,5 +43,17 @@ function auth(authInfo, success, fail = noop) {
     } else {
       success(authData);
     }
+    always();
   }
+}
+
+function createUser(credentials, success, fail = noop, always = noop) {
+  ref.createUser(credentials, (error) => {
+    if (error) {
+      fail(error);
+    } else {
+      auth(credentials, success, fail);
+    }
+    always();
+  });
 }

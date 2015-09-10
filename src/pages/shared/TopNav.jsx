@@ -1,6 +1,7 @@
 import React, {Component} from 'react/addons';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
 
+let SPACE = ' ';
 class TopNav extends Component {
     displayName = 'TopNav'
 
@@ -13,7 +14,9 @@ class TopNav extends Component {
                 </Nav>
                 <Nav right>
                     <NavItem href="#/foo">
-                        {user.password.email} <img src={user.password.profileImageURL} 
+                        {user.password.email}
+                        {SPACE}
+                        <img src={user.password.profileImageURL}
                             className="img-circle" height="25" />
                     </NavItem>
                 </Nav>
