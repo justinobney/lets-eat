@@ -1,25 +1,25 @@
 import Firebase from 'firebase';
-import {fbPaths} from 'constants/index';
+import {LOGIN_SUCCESS} from 'constants/index';
 
 const BASE_URL = 'https://envoc-chatterbox.firebaseio.com/';
 const fbRoot = new Firebase(BASE_URL);
 let dispatch = function () {};
 let refs = {};
 
-export function init(_dispatch) {
+function init(_dispatch) {
   dispatch = _dispatch;
-  fbPaths.forEach((name)=> {
-    let ref = fbRoot.child(name);
-    refs[name] = ref;
-    ref.on('child_added', function (snapshot) {
-      let item = snapshot.val();
-      dispatch({type: `${name}_child_added`, item: item});
-    });
-    ref.on('value', function (snapshot) {
-      let item = snapshot.val();
-      dispatch({type: `${name}_value`, item: item});
-    });
+  startAuthListener();
+}
+
+function startAuthListener(){
+  fbRoot.onAuth(function(authData) {
+    if (authData) {
+      dispatch({type: LOGIN_SUCCESS, payload: authData});
+      console.log("Authenticated with uid:", authData.uid);
+    } else {
+      console.log("Client unauthenticated.")
+    }
   });
 }
 
-export {refs};
+export {refs, init};

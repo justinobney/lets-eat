@@ -5,6 +5,7 @@ import {reducer as formReducer} from 'redux-form';
 
 import {uiState} from 'reducers/uiState';
 import apiMiddleware from 'actions/apiMiddleware';
+import {init as fbInit} from './firebase';
 
 let reducerTree = {
   uiState,
@@ -20,4 +21,7 @@ if (__DEBUG__) {
   buildStore = compose(applyMiddleware(thunk), createStore);
 }
 
-export default buildStore(combineReducers(reducerTree));
+let store = buildStore(combineReducers(reducerTree));
+fbInit(store.dispatch);
+
+export default store;
