@@ -1,9 +1,11 @@
 import React, {Component} from 'react/addons';
 import {Provider} from 'react-redux';
 import {Router} from 'react-router';
-import {DevTools, LogMonitor, DebugPanel} from 'redux-devtools/lib/react';
+import {DevTools, DebugPanel} from 'redux-devtools/lib/react';
 import * as store from 'stores';
 import routes from '../routes';
+
+import DiffMonitor from 'redux-devtools-diff-monitor';
 
 /* eslint-disable */
 function renderDevTools() {
@@ -11,7 +13,7 @@ function renderDevTools() {
         return (
             <DebugPanel top right
                 bottom key="debugPanel">
-              <DevTools store={store} monitor={LogMonitor} />
+              <DevTools store={store} monitor={DiffMonitor} />
             </DebugPanel>
       );
     }
